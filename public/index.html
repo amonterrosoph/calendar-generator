@@ -1,0 +1,59 @@
+
+<!DOCTYPE>
+<html ng-app="calendarGen">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<title> Automatic Calendar Generator</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> <!-- bootstrap script-->
+	<link rel="stylesheet" href="sources/css/angular-datepicker.min.css" type="text/css">
+	<link rel="stylesheet" href="sources/css/fullcalendar.min.css" type="text/css">
+</head>
+<body ng-controller="mainController">
+	<div class="container">
+
+		<h1> Welcome to the Automatic Calendar Generator </h1>
+		
+		<div class = "container">
+			<form ng-submit="generateCalendarList(startDate, totalDays, countryCode)" name="calendarForm">
+				<div class="form-group row"> 
+					<label for="start-date" class="col-2 col-form-label">Start Date: </label>
+					<div class="col-10">
+						<datepicker date-format="dd-MM-yyyy">
+  							<input ng-model="startDate" type="text" class="form-control"	/>
+						</datepicker>
+					</div>
+					<label for="day-numbers" class="col-2 col-form-label">Number of Days: </label>
+					<div class="col-10">
+						<input type="number" class="form-control bfh-number" ng-model="totalDays">
+					</div>
+					<label for="country-code" class="col-2 col-form-label">Country Code: </label>
+					<div class="col-10">
+						<input type="text" class="form-control" id="country-code" ng-model = "countryCode">
+					</div>
+				</div>
+				<input type="submit">
+			</form>
+		</div>
+		<div class="container" ng-repeat="calendar in calendarList">
+			<div class="container">
+				<calendar-widget calendar-params = "calendar" holidays = "holidays"/>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity= "sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<!-- angular library dependency -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js" ></script> 
+	<script data-require="ui-bootstrap@*" data-semver="0.11.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.min.js"></script>
+	<script src="sources/js/moment.js" ></script> 
+	<script src="sources/js/angular-moment.min.js" ></script> 
+	<script src="sources/js/angular-datepicker.min.js" ></script>
+	<script src="sources/js/fullcalendar.min.js" ></script>
+	<script src="sources/js/calendar.js" ></script>
+	<!-- app main front end functionality -->
+	<script src="core.js" ></script> 
+</body>
+</html>

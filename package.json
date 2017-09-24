@@ -1,0 +1,17 @@
+{
+  "name": "calendar-generator",
+  "version": "1.0.0",
+  "description": "App that generates calendar taking as a parameter a start date, country code and number of days to generate,  showing holidays consumed from an API by country.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "amonterroso",
+  "license": "ISC",
+  "dependencies": {
+    "angularjs-datepicker": "^2.1.23",
+    "express": "^4.15.4",
+    "html": "^1.0.0",
+    "node-holidayapi": "^1.0.2"
+  }
+}

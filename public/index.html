@@ -4,45 +4,79 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
-	<title> Automatic Calendar Generator</title>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> <!-- bootstrap script-->
+	<title> Automatic Calendar Generator</title>
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" href="sources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="sources/css/font-awesome.min.css">
+	<link rel="stylesheet" href="sources/css/form-elements.css">
+    <link rel="stylesheet" href="sources/css/style.css">
 	<link rel="stylesheet" href="sources/css/angular-datepicker.min.css" type="text/css">
 	<link rel="stylesheet" href="sources/css/fullcalendar.min.css" type="text/css">
 </head>
 <body ng-controller="mainController">
-	<div class="container">
 
-		<h1> Welcome to the Automatic Calendar Generator </h1>
-		
-		<div class = "container">
-			<form ng-submit="generateCalendarList(startDate, totalDays, countryCode)" name="calendarForm">
-				<div class="form-group row"> 
-					<label for="start-date" class="col-2 col-form-label">Start Date: </label>
-					<div class="col-10">
-						<datepicker date-format="dd-MM-yyyy">
-  							<input ng-model="startDate" type="text" class="form-control"	/>
-						</datepicker>
-					</div>
-					<label for="day-numbers" class="col-2 col-form-label">Number of Days: </label>
-					<div class="col-10">
-						<input type="number" class="form-control bfh-number" ng-model="totalDays">
-					</div>
-					<label for="country-code" class="col-2 col-form-label">Country Code: </label>
-					<div class="col-10">
-						<input type="text" class="form-control" id="country-code" ng-model = "countryCode">
+	<div class="top-content">
+
+		<div class="inner-bg">
+			<div class="container">
+
+				<div class="row">
+					<div class="col-sm-8 col-sm-offset-2 text">
+						<h1>Number8 - Calendar Generator App</h1>
+						<div class="description">
+							<p>
+								Demo app that generates a calendar including  <strong>Holidays</strong> based on Country of choice.
+								<br/>
+								Developer: <a href="https://www.linkedin.com/in/amonterroso/" target="_blank"><strong>Allan A. Monterroso</strong></a>
+							</p>
+						</div>
 					</div>
 				</div>
-				<input type="submit">
-			</form>
-		</div>
-		<div class="container" ng-repeat="calendar in calendarList">
-			<div class="container">
-				<calendar-widget calendar-params = "calendar" holidays = "holidays"/>
+
+				<div class="row">
+
+					<div class="col-sm-5">
+
+						<div class="form-box">
+							<div class="form-top">
+								<div class="form-top-left">
+									<h3>Please fill in the form below to get your calendar</h3>
+
+								</div>
+							</div>
+							<div class="form-bottom">
+								<form role="form" class="registration-form" ng-submit="generateCalendarList(startDate, totalDays, countryCode)" name="calendarForm">
+									<div class="form-group">
+										<label for="form-start-date">Start Date:</label>
+										<datepicker date-format="dd-MM-yyyy">
+											<input type="text" name="form-start-date" placeholder="Starting Date" class="form-first-name form-control" id="form-start-date" ng-model="startDate">
+										</datepicker>
+
+									</div>
+									<div class="form-group">
+										<label for="form-days-number">How many days:</label>
+										<input type="number" name="form-days-number" placeholder="Number of days" class="form-last-name form-control" id="form-days-number" ng-model="totalDays">
+									</div>
+									<div class="form-group">
+										<label for="form-country">Country Code:</label>
+										<input type="text" name="form-country" placeholder="Text Only (Example: US)" class="form-email form-control" id="form-country" ng-model="countryCode">
+									</div>
+									<button type="submit" class="btn">Generate Calendar!</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container calendar-container" ng-repeat="calendar in calendarList">
+				<div class="container">
+					<calendar-widget calendar-params = "calendar" holidays = "holidays"/>
+				</div>
 			</div>
 		</div>
 	</div>
+
 
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity= "sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	<!-- angular library dependency -->

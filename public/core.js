@@ -1,6 +1,6 @@
 let calendarApp = angular.module('calendarGen', ['720kb.datepicker', 'angularMoment', 'ui.calendar']);
 
-calendarApp.controller('mainController', ['$scope', '$http', '$q', 'moment', function($scope, $http, $q, moment) {
+calendarApp.controller('mainController', ['$scope', '$q', '$http', 'moment', function($scope, $q, $http, moment) {
 
 	//initial input variables
 	$scope.startDate = moment(new Date()).format("DD-MM-YYYY");
@@ -8,15 +8,16 @@ calendarApp.controller('mainController', ['$scope', '$http', '$q', 'moment', fun
 	$scope.countryCode = "";
 
 	$scope.generateCalendarList = function(startFrom, totalDays, countryCode) {
-		
-		getCountryHolidays($scope.countryCode).then(
+		const startDate = moment(startFrom, "DD-MM-YYYY");
+
+		getCountryHolidays($scope.countryCode, startDate.year()).then(
 			response => {
 				//Calculating end date for the calendars
-				const startDate = moment(startFrom, "DD-MM-YYYY");
-				const endDate = startDate.clone().add(totalDays, "day");
-				const diffStart = moment([startDate.year(), startDate.month()+1, startDate.day()+1]);
-				const diffEnd = moment([endDate.year(), endDate.month()+1, endDate.day()+1]);
+				const endDate = startDate.clone().add(totalDays+1, "day");
+				const diffStart = moment([startDate.year(), startDate.month(), startDate.date()+1]);
+				const diffEnd = moment([endDate.year(), endDate.month(), endDate.date()+1]);
 				const monthsQty = Math.ceil(diffEnd.diff(diffStart, 'months', true)+1); // calculates how many months are going to be rendered
+
 				$scope.holidays = response.dataReady;
 
 				let calendarList = []; //generating months list for the calendars
@@ -36,19 +37,27 @@ calendarApp.controller('mainController', ['$scope', '$http', '$q', 'moment', fun
 		);
 	};
 
-	function getCountryHolidays(countryCode) {
+	function getCountryHolidays(countryCode, year) {
 		try {
-			return $http.get("/getHolidays/"+countryCode).then(function (success){
+			if(!countryCode || !year) {
+				let deferred = $q.defer();
+				deferred.reject({error: "empty API required parameters", dataReady: []});
+				return deferred.Promise;
+			}
+			return $http.get("/getHolidays/"+countryCode+"/"+year).then(function (response){
 				$scope.holidays = [];
-				if(success.status == 200) {
-					let holidaysList = Object.values(success.data.holidays);
+				if(response.status == 200) { //success
+					let holidaysList = Object.values(response.data.holidays);
 					for(let key in holidaysList) {
 						let current = holidaysList[key][0];
 						$scope.holidays.push(buildHolidayEvent(current));
 					}
-				}
-				success.dataReady = $scope.holidays;
-				return success;
+					response.dataReady = $scope.holidays;
+				} else { // error from API / Server
+					response.dataReady = [];
+					throw new Error(response.error);
+				}				
+				return response;
 			}, function (error){
 				console.error(error);
 			});

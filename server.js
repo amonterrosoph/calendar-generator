@@ -40,5 +40,5 @@ app.get('/getHolidays/:countryCode', function(req, res, next) {
 // 	res.send({error : err});
 // });
 
-app.listen(8080);
+app.listen(3000);
 console.log("CalendarApp has been initialized using port 8080");

@@ -3,7 +3,7 @@
 let express = require('express');
 var HolidayAPI = require('node-holidayapi');
 //API TEST KEY - only dummy holidays data is received
-var api = new HolidayAPI('43caff5e-0317-41d5-8c3f-4756ed9b3d97').v1;
+var api = new HolidayAPI('064704d8-7c3e-49b4-93e1-a2443029fa3a').v1;
 var app = express();
 
 app.use(express.static(__dirname + "/public"));
